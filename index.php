@@ -14,6 +14,10 @@
     <?php
         echo "Hello, we are starting to work with Databases and PHP PDO!"; 
     ?>
+
+<?php
+include "./includes/connector.php"
+?>
     
 </body>
 </html>
