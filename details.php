@@ -11,44 +11,65 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-    <?php
-        echo "Hello, we are starting to work with Databases and PHP PDO!"; 
-    ?>
 
 <?php
 include "./includes/connector.php";
 
-?> 
+// 
+
+if (isset($_GET['id'])) {
+$id=$_GET['id'];
+}
+else {
+    exit("No id found!");
+}
+
+$sqlQuery=$dbConn->query("SELECT `title` , `author` , `genre` , `description` , `publisher` , `price` , `currency` , `in_stock` , `ISBN` FROM `books` WHERE `id` = $id");
+$row = $sqlQuery->fetch(PDO::FETCH_ASSOC);
+
+
+
+?>
+
+
 
 <div class="container">
         <div class="row">
-            <h2>Library</h2>
+            <h2>Details</h2>
             <table class="table table-hover">
                 <!-- Tabellenkopf-->
                 <thead>
                     <tr>
-                    <?php
-                       include "./includes/tableHeader.php"; 
+                    <th class="w-33 p-3">
+                    <?php echo($row['ISBN']);
                     ?>
+</th> 
+<th>
+<?php echo($row['title']); ?> / <?php echo($row['author']); ?>
+</th> 
                     </tr>
                 </thead>
  
                 <tbody>
                     
-                    
-                    <?php
-                       include "./includes/tableData.php"; 
-                    ?>
-                        
-                   
-                    <?php
-                    
-                    ?>
+                // Generate td
+
+<?php foreach ($row as $columnName => $value) {
+    $nColumnName = nColumnName($columnName);
+    echo "<tr>
+    <td class=''>
+    $nColumnName
+</td>
+<td class=''>
+        $value
+</td>";
+
+};
+        ?>
                 </tbody>
             </table>
  
-           <!--  <input class="btn btn-primary"
-                    type="submit" value="Submit"> -->
+            <a class="btn btn-info btn-sm" href="javascript:history.back()" role="button">Back</a>
         </div>
     </div>
     
